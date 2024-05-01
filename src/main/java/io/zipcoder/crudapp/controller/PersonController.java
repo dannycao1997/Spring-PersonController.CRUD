@@ -26,7 +26,7 @@ public class PersonController {
     @PostMapping // create a new person
     public ResponseEntity<Person> createPerson(@RequestBody Person person) {
         Person savedPerson = personRepository.save(person);
-        return new ResponseEntity<>(savedPerson, HttpStatus.CREATED);
+        return ResponseEntity.status(201).body(savedPerson);
     }
 
     @GetMapping("/{id}") //get the person with the id number
