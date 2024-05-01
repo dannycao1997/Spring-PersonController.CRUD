@@ -13,9 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/people")
-
 public class PersonController {
-
     @Autowired
     private PersonRepository personRepository;
 
@@ -28,7 +26,7 @@ public class PersonController {
     @PostMapping // create a new person
     public ResponseEntity<Person> createPerson(@RequestBody Person person) {
         Person savedPerson = personRepository.save(person);
-        return ResponseEntity.status(201).body(savedPerson);
+        return new ResponseEntity<>(savedPerson, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}") //get the person with the id number
@@ -55,7 +53,7 @@ public class PersonController {
 
     @DeleteMapping("/{id}") //de;ete the person with id number
     public ResponseEntity<Void> deletePerson(@PathVariable int id) {
-        personRepository.delete(id);
+        personRepository.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
