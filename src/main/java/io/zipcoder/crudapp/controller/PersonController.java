@@ -3,8 +3,9 @@ package io.zipcoder.crudapp.controller;
 import io.zipcoder.crudapp.entity.Person;
 import io.zipcoder.crudapp.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,13 +17,17 @@ public class PersonController {
     @Autowired
     private PersonRepository personRepository;
 
-    public List<Person> getPersonList(){
-        return new ArrayList<>();
+    @GetMapping
+    public ResponseEntity<List<Person>> getPersonList() {
+        List<Person> people = (List<Person>) personRepository.findAll();
+        return new ResponseEntity<>(people, HttpStatus.OK);
     }
 
-    public Person createPerson(Person person) {
-        return person;
+    @PostMapping
+    public ResponseEntity<Person> createPerson(@RequestBody Person person) {
+        return new ResponseEntity<>(personRepository.save(person), HttpStatus.CREATED);
     }
+
 
     public Person getPersonById(int id) {
         return null;
@@ -32,6 +37,9 @@ public class PersonController {
         return person;
     }
 
-    public void deletePersonById(int id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePerson(@PathVariable int id) {
+        personRepository.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
