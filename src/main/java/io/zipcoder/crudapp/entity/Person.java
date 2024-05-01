@@ -7,7 +7,6 @@ import javax.persistence.Id;
 
 @Entity
 public class Person {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String firstName;
@@ -16,10 +15,10 @@ public class Person {
 
     public Person() {
     }
-    public Person(String firstName, String lastName, Integer id) {
+
+    public Person(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.id = id;
     }
 
     public String getFirstName() {
@@ -42,7 +41,7 @@ public class Person {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 }
